@@ -6,7 +6,7 @@ The classic 2048 game developed by Gabriele Cirulli recreated in pure Python wit
 - **Interactive Sliding Tiles**: Move tiles manually with the arrow keys.
 - **Live Expectimax\* Solver**: Press "S" to let the solver predict the best moves, and watch it live!
 - **Animated Moves**: Watch each tile slide smoothly and pop just like the original web game!
-- **Easy Reset**: Press "R" to reset the grid again and reset your score
+- **Easy Reset**: Press "R" to reset the grid and your score
 - **Customisable Depth**: Simply change the max depth in solver.py
 
 ## Dependencies
@@ -47,7 +47,7 @@ The classic 2048 game developed by Gabriele Cirulli recreated in pure Python wit
 - **R**: Reset the grid to its starting position.
 - **S**: Toggle the Expectimax solver, press again to disable.
 - **Q**: Continue the game if won already. 
-- **Live Animation**: As the solver predicts the best moves, you can watch it seamlessly merge tiles live!
+- **Live Solving Animation**: As the solver predicts the best moves, you can watch it seamlessly merge tiles live!
 
 ## Credits
 
