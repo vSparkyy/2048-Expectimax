@@ -41,6 +41,13 @@ bold_font = pygame.font.Font(
     os.path.join(os.path.dirname(__file__), "assets/montserrat_bold.ttf"), 36
 )
 
+def save_score():
+    with open(os.path.join(os.path.dirname(__file__), "assets/highscore.txt"), "r") as f:
+        highscore = int(f.read())
+    if game.score > highscore:
+        with open(os.path.join(os.path.dirname(__file__), "assets/highscore.txt"), "w") as f:
+            f.write(str(game.score))
+
 class Tile:
     def __init__(self, position, size, number, line_space=15):
         self.position = position
@@ -379,6 +386,7 @@ class Grid:
 
         self.generate_tiles()
         self.score += score
+        save_score()
 
     def animate_moves(self, moves_report, duration=0.12):
         if not moves_report:
@@ -452,14 +460,6 @@ class Grid:
             if tile.number == 2048:
                 return True
         return False
-    
-
-def save_score():
-    with open(os.path.join(os.path.dirname(__file__), "assets/highscore.txt"), "r") as f:
-        highscore = int(f.read())
-    if game.score > highscore:
-        with open(os.path.join(os.path.dirname(__file__), "assets/highscore.txt"), "w") as f:
-            f.write(str(game.score))
 
 
 game = Grid(500, (150, 200))
@@ -469,22 +469,20 @@ continued = False
 
 while True:
     game.draw_grid()
-    pygame.display.flip()
 
-    if game.check_win() and not won: 
-        win_text = bold_font.render("You won! Press R to restart, or Q to continue playing.", True, colours["light_gray"])
-        screen.blit(win_text, (150, 400))
+    if game.check_win() and not continued: 
+        win_text = bold_font.render("                             You WON!\nPress R to restart or Q to continue playing", True, colours["white"])
+        pygame.draw.rect(screen, colours["dark_yellow"], (5, 345, 790, 110), border_radius=10)
+        pygame.draw.rect(screen, colours["light_brown"], (10, 350, 780, 100), border_radius=10)
+        screen.blit(win_text, (15, 350))
         won = True
-        save_score()
     
     if game.check_loss():
-        lost_text = bold_font.render("You lost! Press R to restart", True, colours["light_gray"])
-        screen.blit(lost_text, (200, 400))
-        with open(os.path.join(os.path.dirname(__file__), "assets/highscore.txt"), "r") as f:
-            highscore = int(f.read())
-        if game.score > highscore:
-            with open(os.path.join(os.path.dirname(__file__), "assets/highscore.txt"), "w") as f:
-                f.write(str(game.score))
+        lost_text = bold_font.render("You LOST! Press R to restart", True, colours["white"])
+        pygame.draw.rect(screen, colours["red"], (140, 370, 535, 110), border_radius=10)
+        pygame.draw.rect(screen, colours["light_brown"], (145, 375, 525, 100), border_radius=10)
+        screen.blit(lost_text, (150, 400))
+        save_score()
 
     if active and not game.check_loss() and not won:
         best_move = solver.best_move(game)
@@ -508,10 +506,7 @@ while True:
             if event.key == pygame.K_s:
                 active = not active
 
-            if event.key == pygame.K_a:
-                save_score()
-
-            if not (won or continued) and not active:
+            if ((not won) or continued) and not active:
                 if event.key == pygame.K_UP:
                     game.move("up")
 
@@ -524,5 +519,5 @@ while True:
                 elif event.key == pygame.K_RIGHT:
                     game.move("right")
 
-
+    pygame.display.flip()
     clock.tick(120)
