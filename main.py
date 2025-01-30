@@ -484,7 +484,7 @@ while True:
         screen.blit(lost_text, (150, 400))
         save_score()
 
-    if active and not game.check_loss() and not won:
+    if active and not game.check_loss() and (not won or continued):
         best_move = solver.best_move(game)
         game.move(best_move)
 
