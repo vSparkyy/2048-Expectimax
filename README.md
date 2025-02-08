@@ -26,7 +26,7 @@ The classic 2048 game developed by Gabriele Cirulli recreated in pure Python wit
 
 2. **OR clone the repository to your local machine**:
    ```bash
-   git clone https://github.com/your-username/Fifteen-Puzzle-IDAsolver.git
+   git clone https://github.com/vSparkyy/2048-Expectimax.git
    ```
    - Install the required dependencies:
      ```bash
