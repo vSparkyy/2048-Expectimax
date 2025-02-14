@@ -471,10 +471,12 @@ while True:
     game.draw_grid()
 
     if game.check_win() and not continued: 
-        win_text = bold_font.render("                             You WON!\nPress R to restart or Q to continue playing", True, colours["white"])
+        win_text = bold_font.render("You WON!", True, colours["white"])
+        win_text2 = bold_font.render("R to restart or Q to continue playing", True, colours["white"])
         pygame.draw.rect(screen, colours["dark_yellow"], (5, 345, 790, 110), border_radius=10)
         pygame.draw.rect(screen, colours["light_brown"], (10, 350, 780, 100), border_radius=10)
-        screen.blit(win_text, (15, 350))
+        screen.blit(win_text, (300, 350))
+        screen.blit(win_text2, (60, 400))
         won = True
     
     if game.check_loss():
@@ -486,7 +488,7 @@ while True:
 
     if active and not game.check_loss() and (not won or continued):
         best_move = solver.best_move(game)
-        game.move(best_move)
+        game.move(best_move, animate=False)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
